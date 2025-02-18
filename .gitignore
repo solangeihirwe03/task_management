@@ -1,5 +1,7 @@
 .venv/
-.env/
+.env
 *.pyc
 *.log
 __pycache__/
+task_management/settings.py
+venv/
