@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class TaskSerizalizer(serializers.ModelSerializer):
+class TaskSerizalizers(serializers.ModelSerializer):
     class Meta:
         model = Tasks
         fields = "__all__"
