@@ -40,3 +40,14 @@ class UserLoginSerializer(serializers.Serializer):
         data["user"] = user
 
         return data
+    
+class GetAllUsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "email"]
+        
+    def to_representation(self, instance):
+        """Convert instance into JSON serializableformat"""
+        data = super().to_representation(instance)
+        return data
+        

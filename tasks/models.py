@@ -17,6 +17,8 @@ class Tasks(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    def __str__(self):
-        return f"Task: {self.title}, Assigned to: {self.assigned_to}, Priority: {self.priority}, Deadline: {self.deadline}"
+    def save(self, *args, **kwargs):
+        if not User.objects.filter(id=self.assigned_to_id).exists():
+            raise ValueError("Assigned user does not exist.")
+        super().save(*args, **kwargs)
 
