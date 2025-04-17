@@ -83,17 +83,29 @@ WSGI_APPLICATION = 'task_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('MYSQL_DATABASE'),
-        'USER': os.getenv('MYSQL_USER'),
-        "PASSWORD": os.getenv('MYSQL_PASSWORD'),
-        'HOST': "localhost",
-        'PORT':"3306",
+DJANGO_ENV = os.getenv('DJANGO_ENV', "development")
+if DJANGO_ENV == DJANGO_ENV:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('PROD_DB_NAME'),
+            'USER': os.getenv('PROD_DB_USER'),
+            'PASSWORD': os.getenv('PROD_DB_PASSWORD'),
+            'HOST': os.getenv('PROD_DB_HOST'),
+            'PORT': os.getenv('PROD_DB_PORT', '3306'),
+        }
     }
-}
-
+else:  # fallback to local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('MYSQL_DATABASE'),
+            'USER': os.getenv('MYSQL_USER'),
+            "PASSWORD": os.getenv('MYSQL_PASSWORD'),
+            'HOST': "localhost",
+            'PORT':"3306",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
