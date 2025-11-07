@@ -24,7 +24,7 @@ class CreateTaskSerizalizers(serializers.ModelSerializer):
         return value
     
     def perform_create(self, serializer):
-        serializer.save(created_by=self.request.id)
+        serializer.save(created_by=self.request.email)
         
         
     def create(self, validated_data):
@@ -42,9 +42,10 @@ class GetTasksSerializer(serializers.ModelSerializer):
         
 class UpdateTaskSerializer(serializers.ModelSerializer):
     assigned_to_email = serializers.EmailField(source="assigned_to.email", read_only=True)
+    created_by_email = serializers.EmailField(source="created_by.email", read_only=True)
     class Meta:
         model = Tasks
-        fields = ["id","title", "description", "assigned_to_email", "priority", "created_by", "created_at", "updated_at"]
+        fields = ["id","title", "description", "assigned_to_email", "priority", "created_by_email", "created_at", "updated_at"]
         extra_kwargs = {
             "title": {"required": False},
             "description": {"required": False},

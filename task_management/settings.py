@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'corsheaders',
     "users",
     "tasks",
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'drf_spectacular',
+    'drf_spectacular_sidecar'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +86,7 @@ WSGI_APPLICATION = 'task_management.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DJANGO_ENV = os.getenv('DJANGO_ENV', "development")
-if DJANGO_ENV == DJANGO_ENV:
+if DJANGO_ENV == os.getenv('DJANGO_ENV'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -95,7 +97,7 @@ if DJANGO_ENV == DJANGO_ENV:
             'PORT': os.getenv('PROD_DB_PORT', '3306'),
         }
     }
-else:  # fallback to local development
+else:  
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -155,7 +157,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
 }
 
 AUTH_USER_MODEL = "users.CustomUser"
